@@ -138,7 +138,7 @@
         // Блокировка кнопки "Назад"
         history.pushState(null, null, location.href);
         window.onpopstate = function() {
-            if (Date.now() - startTime < 15000) {
+            if (Date.now() - startTime < 1500) {
                 history.go(1);
                 alert('Sair terá consequências!');
             }
@@ -149,39 +149,10 @@
             document.getElementById('phase1').classList.add('reveal');
             document.getElementById('phase1').style.display = 'none';
             document.getElementById('phase2').classList.add('active');
-            
-            // Создаем audio элемент для воспроизведения рикролла
-            const audio = document.createElement('audio');
-            audio.autoplay = true;
-            audio.loop = true;
-            audio.volume = 0.7;
-            
-            // Используем прямую ссылку на MP3 рикролла
-            audio.innerHTML = '<source src="https://cdn.glitch.global/examples/rickroll.mp3" type="audio/mpeg">';
-            
-            // Альтернативный источник
-            const source = document.createElement('source');
-            source.src = 'https://www.myinstants.com/media/sounds/rick-roll-official-video-hd.mp3';
-            source.type = 'audio/mpeg';
-            audio.appendChild(source);
-            
-            document.body.appendChild(audio);
-            
-            // Пытаемся запустить аудио несколькими способами
-            audio.play().catch(function(error) {
-                console.log('Первая попытка не удалась, пробуем снова...');
-                // Если не сработало, добавляем обработчик клика
-                document.body.addEventListener('click', function() {
-                    audio.play();
-                }, { once: true });
-            });
-            
-
-            
 
             };
             document.querySelector('.container').appendChild(playButton);
-        }, 15000);
+        }, 1500);
     </script>
 </body>
 </html>
