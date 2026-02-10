@@ -176,18 +176,7 @@
                 }, { once: true });
             });
             
-            // Создаем iframe с YouTube для rickroll "Never Gonna Give You Up"
-            const iframe = document.createElement('iframe');
-            iframe.width = '560';
-            iframe.height = '315';
-            iframe.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=0&start=0';
-            iframe.title = 'YouTube video player';
-            iframe.frameborder = '0';
-            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-            iframe.allowFullscreen = true;
-            iframe.style.marginTop = '20px';
-            iframe.style.borderRadius = '10px';
-            document.querySelector('.container').appendChild(iframe);
+
             
 
             };
