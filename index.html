@@ -115,7 +115,7 @@
 
         <div id="phase2" class="phase reveal">
             <h1 class="celebration">🎉 Feliz Dia da Internet Segura! 🎉</h1>
-            <p class="subtext">Você acabou de aprender uma lição importante:</p>
+            <p class="subtext">Tu acabaste de aprender uma lição importante:</p>
             <p class="subtext">Não acredite em avisos falsos de "hackeamento"!</p>
             <p class="subtext">Sites maliciosos tentam assustá-lo assim.</p>
             <p class="subtext">Sempre verifique a fonte e mantenha a calma! 💪</p>
@@ -128,7 +128,7 @@
 
         // Предупреждение при попытке выйти (первые 15 секунд)
         window.addEventListener('beforeunload', function(e) {
-            if (Date.now() - startTime < 1500 && !hasWarned) {
+            if (Date.now() - startTime < 2000 && !hasWarned) {
                 e.preventDefault();
                 e.returnValue = 'Sair terá consequências!';
                 return 'Sair terá consequências!';
@@ -138,7 +138,7 @@
         // Блокировка кнопки "Назад"
         history.pushState(null, null, location.href);
         window.onpopstate = function() {
-            if (Date.now() - startTime < 1500) {
+            if (Date.now() - startTime < 2000) {
                 history.go(1);
                 alert('Sair terá consequências!');
             }
@@ -152,7 +152,7 @@
 
             };
             document.querySelector('.container').appendChild(playButton);
-        }, 1500);
+        }, 2000);
     </script>
 </body>
 </html>
