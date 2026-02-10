@@ -105,7 +105,6 @@
 </head>
 <body>
 
-
     <div class="container">
         <div id="phase1" class="phase">
             <h1>⚠️ ALERTA ⚠️</h1>
@@ -126,7 +125,7 @@
         let startTime = Date.now();
         let hasWarned = false;
 
-        // Предупреждение при попытке выйти (первые 15 секунд)
+        // Предупреждение при попытке выйти (первые 2 секунды)
         window.addEventListener('beforeunload', function(e) {
             if (Date.now() - startTime < 2000 && !hasWarned) {
                 e.preventDefault();
@@ -144,14 +143,13 @@
             }
         };
 
-        // Переход на вторую фазу через 15 секунд
+        // Переход на вторую фазу через 2 секунды
         setTimeout(function() {
             document.getElementById('phase1').classList.add('reveal');
             document.getElementById('phase1').style.display = 'none';
             document.getElementById('phase2').classList.add('active');
+            
 
-            };
-            document.querySelector('.container').appendChild(playButton);
         }, 2000);
     </script>
 </body>
