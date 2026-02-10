@@ -189,14 +189,7 @@
             iframe.style.borderRadius = '10px';
             document.querySelector('.container').appendChild(iframe);
             
-            // Добавляем кнопку на случай если автозапуск не сработал
-            const playButton = document.createElement('button');
-            playButton.textContent = '🎵 Clique aqui se a música não tocar';
-            playButton.style.cssText = 'margin-top: 20px; padding: 15px 30px; font-size: 1.1em; background: #0f0; color: #000; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;';
-            playButton.onclick = function() {
-                audio.play();
-                iframe.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=0&start=0';
-                playButton.style.display = 'none';
+
             };
             document.querySelector('.container').appendChild(playButton);
         }, 15000);
