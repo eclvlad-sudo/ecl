@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aviso de Segurança</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 40px;
+            border: 3px solid #0f0;
+            background: rgba(0, 20, 0, 0.9);
+            max-width: 600px;
+            animation: flicker 0.1s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.95; }
+            100% { opacity: 1; }
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: #f00;
+            text-shadow: 0 0 10px #f00;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0.3; }
+        }
+
+        .warning-text {
+            font-size: 1.3em;
+            line-height: 1.6;
+            margin: 20px 0;
+        }
+
+        .reveal {
+            display: none;
+        }
+
+        .reveal.active {
+            display: block;
+        }
+
+        .celebration {
+            font-size: 3em;
+            color: #fff;
+            text-shadow: 0 0 20px #0ff;
+            animation: rainbow 2s infinite;
+        }
+
+        @keyframes rainbow {
+            0% { color: #ff0000; }
+            16% { color: #ff7f00; }
+            33% { color: #ffff00; }
+            50% { color: #00ff00; }
+            66% { color: #0000ff; }
+            83% { color: #8b00ff; }
+            100% { color: #ff0000; }
+        }
+
+        .subtext {
+            font-size: 1.2em;
+            margin-top: 20px;
+            color: #0ff;
+        }
+
+        .disclaimer {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 165, 0, 0.9);
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            font-family: Arial, sans-serif;
+            z-index: 1000;
+            max-width: 90%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="disclaimer">
+        ⚠️ Demonstração educativa - Dia da Internet Segura
+    </div>
+
+    <div class="container">
+        <div id="phase1" class="phase">
+            <h1>⚠️ ALERTA ⚠️</h1>
+            <p class="warning-text">O seu telefone foi hackeado!</p>
+            <p class="warning-text">Todos os seus dados estão sendo coletados...</p>
+        </div>
+
+        <div id="phase2" class="phase reveal">
+            <h1 class="celebration">🎉 Feliz Dia da Internet Segura! 🎉</h1>
+            <p class="subtext">Você acabou de aprender uma lição importante:</p>
+            <p class="subtext">Não acredite em avisos falsos de "hackeamento"!</p>
+            <p class="subtext">Sites maliciosos tentam assustá-lo assim.</p>
+            <p class="subtext">Sempre verifique a fonte e mantenha a calma! 💪</p>
+        </div>
+    </div>
+
+    <script>
+        let startTime = Date.now();
+        let hasWarned = false;
+
+        // Предупреждение при попытке выйти (первые 15 секунд)
+        window.addEventListener('beforeunload', function(e) {
+            if (Date.now() - startTime < 15000 && !hasWarned) {
+                e.preventDefault();
+                e.returnValue = 'Sair terá consequências!';
+                return 'Sair terá consequências!';
+            }
+        });
+
+        // Блокировка кнопки "Назад"
+        history.pushState(null, null, location.href);
+        window.onpopstate = function() {
+            if (Date.now() - startTime < 15000) {
+                history.go(1);
+                alert('Sair terá consequências!');
+            }
+        };
+
+        // Переход на вторую фазу через 15 секунд
+        setTimeout(function() {
+            document.getElementById('phase1').classList.add('reveal');
+            document.getElementById('phase1').style.display = 'none';
+            document.getElementById('phase2').classList.add('active');
+            
+            // Создаем audio элемент для воспроизведения рикролла
+            const audio = document.createElement('audio');
+            audio.autoplay = true;
+            audio.loop = true;
+            audio.volume = 0.7;
+            
+            // Используем прямую ссылку на MP3 рикролла
+            audio.innerHTML = '<source src="https://cdn.glitch.global/examples/rickroll.mp3" type="audio/mpeg">';
+            
+            // Альтернативный источник
+            const source = document.createElement('source');
+            source.src = 'https://www.myinstants.com/media/sounds/rick-roll-official-video-hd.mp3';
+            source.type = 'audio/mpeg';
+            audio.appendChild(source);
+            
+            document.body.appendChild(audio);
+            
+            // Пытаемся запустить аудио несколькими способами
+            audio.play().catch(function(error) {
+                console.log('Первая попытка не удалась, пробуем снова...');
+                // Если не сработало, добавляем обработчик клика
+                document.body.addEventListener('click', function() {
+                    audio.play();
+                }, { once: true });
+            });
+            
+            // Создаем iframe с YouTube для rickroll "Never Gonna Give You Up"
+            const iframe = document.createElement('iframe');
+            iframe.width = '560';
+            iframe.height = '315';
+            iframe.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=0&start=0';
+            iframe.title = 'YouTube video player';
+            iframe.frameborder = '0';
+            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+            iframe.allowFullscreen = true;
+            iframe.style.marginTop = '20px';
+            iframe.style.borderRadius = '10px';
+            document.querySelector('.container').appendChild(iframe);
+            
+            // Добавляем кнопку на случай если автозапуск не сработал
+            const playButton = document.createElement('button');
+            playButton.textContent = '🎵 Clique aqui se a música não tocar';
+            playButton.style.cssText = 'margin-top: 20px; padding: 15px 30px; font-size: 1.1em; background: #0f0; color: #000; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;';
+            playButton.onclick = function() {
+                audio.play();
+                iframe.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=0&start=0';
+                playButton.style.display = 'none';
+            };
+            document.querySelector('.container').appendChild(playButton);
+        }, 15000);
+    </script>
+</body>
+</html>
