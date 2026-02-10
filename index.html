@@ -128,7 +128,7 @@
 
         // Предупреждение при попытке выйти (первые 15 секунд)
         window.addEventListener('beforeunload', function(e) {
-            if (Date.now() - startTime < 15000 && !hasWarned) {
+            if (Date.now() - startTime < 1500 && !hasWarned) {
                 e.preventDefault();
                 e.returnValue = 'Sair terá consequências!';
                 return 'Sair terá consequências!';
