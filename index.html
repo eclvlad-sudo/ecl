@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aviso de Segurança</title>
+
     <style>
         * {
             margin: 0;
@@ -17,7 +18,6 @@
             color: #0f0;
             min-height: 100vh;
             overflow-x: hidden;
-            overflow-y: auto;
             padding: 20px;
         }
 
@@ -28,13 +28,7 @@
             background: rgba(0, 20, 0, 0.9);
             max-width: 800px;
             margin: 0 auto;
-            animation: flicker 0.1s infinite alternate;
             min-height: 400px;
-        }
-
-        @keyframes flicker {
-            0% { opacity: 0.95; }
-            100% { opacity: 1; }
         }
 
         h1 {
@@ -42,12 +36,6 @@
             margin-bottom: 30px;
             color: #f00;
             text-shadow: 0 0 10px #f00;
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            0%, 49% { opacity: 1; }
-            50%, 100% { opacity: 0.3; }
         }
 
         .warning-text {
@@ -68,18 +56,7 @@
             font-size: 2.5em;
             color: #fff;
             text-shadow: 0 0 20px #0ff;
-            animation: rainbow 2s infinite;
             margin-bottom: 30px;
-        }
-
-        @keyframes rainbow {
-            0% { color: #ff0000; }
-            16% { color: #ff7f00; }
-            33% { color: #ffff00; }
-            50% { color: #00ff00; }
-            66% { color: #0000ff; }
-            83% { color: #8b00ff; }
-            100% { color: #ff0000; }
         }
 
         .subtext {
@@ -95,114 +72,569 @@
             font-size: 1.1em;
         }
 
-        .disclaimer {
-            position: fixed;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 165, 0, 0.9);
-            color: #000;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 0.9em;
-            font-family: Arial, sans-serif;
-            z-index: 1000;
-            max-width: 90%;
-            text-align: center;
-        }
-
         button {
             padding: 15px 30px;
-            font-size: 1.2em;
+            font-size: 1.1em;
             background: #0f0;
             color: #000;
             border: none;
             border-radius: 10px;
             cursor: pointer;
             font-weight: bold;
-            margin-top: 30px;
-            transition: all 0.3s;
+            margin-top: 20px;
         }
 
         button:hover {
             background: #0ff;
-            transform: scale(1.05);
+        }
+
+        /* COMENTÁRIOS */
+
+        #comments {
+            margin-top: 40px;
+            text-align: left;
+        }
+
+        .comment {
+            border: 1px solid #0f0;
+            padding: 15px;
+            margin: 15px 0;
+            background: rgba(0, 30, 0, 0.8);
+        }
+
+        .comment-name {
+            color: #0f0;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .comment-text {
+            color: #0ff;
+        }
+
+        /* BOTÃO ADMIN */
+
+        #adminButton {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            padding: 8px 15px;
+            font-size: 12px;
+            background: #111;
+            color: #0f0;
+            border: 1px solid #0f0;
+            border-radius: 5px;
+            margin: 0;
+        }
+
+        /* MENU ADMIN */
+
+        #adminPanel {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background: #001000;
+            border: 3px solid #0f0;
+            padding: 25px;
+            z-index: 9999;
+            box-shadow: 0 0 30px #0f0;
+        }
+
+        #adminPanel h2 {
+            color: #0f0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .admin-comment {
+            border: 1px solid #0f0;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .admin-comment input,
+        .admin-comment textarea {
+            width: 100%;
+            background: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .admin-comment textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .delete-button {
+            background: #f00;
+            color: #fff;
+            padding: 8px 15px;
+            margin-right: 5px;
+        }
+
+        .save-button {
+            background: #0f0;
+            color: #000;
+            padding: 8px 15px;
+        }
+
+        #adminLogin {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #001000;
+            border: 3px solid #0f0;
+            padding: 30px;
+            z-index: 10000;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        #adminLogin h2 {
+            color: #0f0;
+            margin-bottom: 20px;
+        }
+
+        #adminPassword {
+            width: 100%;
+            padding: 12px;
+            background: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 15px;
+        }
+
+        #adminMessage {
+            color: #f00;
+            margin-top: 10px;
         }
     </style>
 </head>
+
 <body>
 
     <div class="container">
-        <div id="phase1" class="phase">
+
+        <!-- PRIMEIRO ECRÃ -->
+
+        <div id="phase1">
             <h1>⚠️ ALERTA ⚠️</h1>
-            <p class="warning-text">O seu dispositivo foi hackeado!</p>
-            <p class="warning-text">Todos os seus dados estão a ser recolhidos...</p>
+
+            <p class="warning-text">
+                O seu dispositivo foi hackeado!
+            </p>
+
+            <p class="warning-text">
+                Todos os seus dados estão a ser recolhidos...
+            </p>
         </div>
 
-        <div id="phase2" class="phase reveal">
-            <h1 class="celebration">Internet Segura!</h1>
-            
-            <p class="subtext"><strong>Navegação Segura: Como proteger os seus dados e evitar os perigos da internet</strong></p>
-            <p class="subtext">A internet é uma ferramenta poderosa, mas também apresenta diversos riscos. Para navegar com tranquilidade e proteger as suas informações, é fundamental adotar alguns hábitos de segurança. Conheça as principais práticas para uma navegação segura:</p>
-            
-            <p class="subtext"><strong>1. Proteja as suas contas com palavras-passe fortes</strong><br>
-            A primeira linha de defesa das suas contas online são as palavras-passe. Evite usar a mesma password para vários serviços ou optar por combinações óbvias. O ideal é utilizar um gestor de passwords, que permite criar e armazenar palavras-passe complexas, longas e únicas para cada site ou aplicação que utiliza. Dessa forma, mesmo que um serviço seja comprometido, as suas outras contas continuam protegidas.</p>
-            
-            <p class="subtext"><strong>2. Verifique a segurança dos sites</strong><br>
-            Antes de inserir dados pessoais ou bancários, especialmente em páginas de compras ou home banking, é essencial confirmar se a conexão é segura. Verifique se o endereço do site começa com "https://" (o "s" significa seguro) e procure pelo ícone de um cadeado na barra de endereços do navegador. Esses indicadores significam que a comunicação entre o seu computador e o site está criptografada.</p>
-            
-            <p class="subtext"><strong>3. Mantenha os seus dispositivos sempre atualizados</strong><br>
-            Manter o sistema operativo, o navegador e as aplicações atualizados é uma das medidas mais eficazes contra ameaças virtuais. As atualizações não trazem apenas novas funcionalidades; elas corrigem falhas de segurança (conhecidas como "bugs" ou vulnerabilidades) que podem ser exploradas por criminosos para invadir o seu sistema ou roubar dados.</p>
-            
-            <p class="subtext"><strong>4. Cuidado com redes Wi-Fi públicas</strong><br>
-            Redes Wi-Fi abertas, como as de cafés, aeroportos ou shoppings, são práticas, mas apresentam riscos elevados. Evite aceder a sites sensíveis, como os de bancos ou o seu e-mail principal, enquanto estiver ligado a estas redes. Se precisar mesmo de aceder a informações confidenciais, utilize uma VPN (Rede Privada Virtual), que cria um túnel seguro e criptografado para a sua comunicação.</p>
-            
-            <p class="subtext"><strong>5. Prevenção de phishing: desconfie de mensagens suspeitas</strong><br>
-            O phishing é uma das ameaças mais comuns. Trata-se de tentativas de roubo de dados através de mensagens ou sites falsos. Nunca clique em links ou faça o download de anexos presentes em e-mails, SMS ou mensagens de redes sociais de remetentes desconhecidos ou com conteúdo suspeito. Em caso de dúvida, contacte a empresa ou a pessoa por outro meio para confirmar a veracidade da mensagem.</p>
-            
-            <p class="subtext"><strong>6. Tenha atenção à segurança física</strong><br>
-            Se utiliza computadores partilhados ou públicos, redobre a atenção. Nunca salve as palavras-passe no navegador desses equipamentos e lembre-se sempre de terminar a sessão (fazer "logout") em todos os serviços após a utilização, fechando também o navegador para impedir que a próxima pessoa aceda às suas contas.</p>
-            
-            <p class="subtext"><strong>7. Cuide do conteúdo e do histórico</strong><br>
-            Para uma navegação mais saudável e privada, especialmente em ambientes familiares, utilize ferramentas de controlo parental para filtrar conteúdos inadequados. Além disso, é uma boa prática fazer uma limpeza regular do histórico de navegação, dos cookies e dos ficheiros temporários. Isso ajuda a proteger a sua privacidade e pode melhorar o desempenho do navegador.</p>
-            
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSffPUHeIWgfjV9g2S5T6qj0Dd7qm1rvjjsgyMFcRhWoh2XZhA/viewform?usp=publish-editorУ" target="_blank">
+
+        <!-- SEGUNDO ECRÃ -->
+
+        <div id="phase2" class="reveal">
+
+            <h1 class="celebration">
+                Internet Segura!
+            </h1>
+
+            <p class="subtext">
+                <strong>
+                    Navegação Segura: Como proteger os seus dados e evitar os perigos da internet
+                </strong>
+            </p>
+
+            <p class="subtext">
+                A internet é uma ferramenta poderosa, mas também apresenta diversos riscos.
+                Para navegar com tranquilidade e proteger as suas informações, é fundamental
+                adotar alguns hábitos de segurança.
+            </p>
+
+            <p class="subtext">
+                <strong>1. Proteja as suas contas com palavras-passe fortes</strong><br>
+                Evite usar a mesma password para vários serviços e utilize palavras-passe
+                longas e únicas.
+            </p>
+
+            <p class="subtext">
+                <strong>2. Verifique a segurança dos sites</strong><br>
+                Antes de inserir dados pessoais ou bancários, confirme se o endereço começa
+                com https://.
+            </p>
+
+            <p class="subtext">
+                <strong>3. Mantenha os seus dispositivos atualizados</strong><br>
+                As atualizações corrigem falhas de segurança e ajudam a proteger os seus dados.
+            </p>
+
+            <p class="subtext">
+                <strong>4. Cuidado com redes Wi-Fi públicas</strong><br>
+                Evite utilizar serviços bancários ou outras informações sensíveis em redes
+                Wi-Fi abertas.
+            </p>
+
+            <p class="subtext">
+                <strong>5. Prevenção de phishing</strong><br>
+                Não clique em links suspeitos nem abra anexos de remetentes desconhecidos.
+            </p>
+
+
+            <!-- COMENTÁRIOS -->
+
+            <div id="comments">
+
+                <h2>💬 Comentários</h2>
+
+                <div id="commentList"></div>
+
+            </div>
+
+
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSffPUHeIWgfjV9g2S5T6qj0Dd7qm1rvjjsgyMFcRhWoh2XZhA/viewform"
+               target="_blank">
+
                 <button>FORMULÁRIO</button>
+
             </a>
+
         </div>
+
     </div>
 
+
+    <!-- BOTÃO ADMIN -->
+
+    <button id="adminButton" onclick="openAdminLogin()">
+        ADMIN
+    </button>
+
+
+    <!-- LOGIN ADMIN -->
+
+    <div id="adminLogin">
+
+        <h2>🔐 ADMIN</h2>
+
+        <input
+            type="password"
+            id="adminPassword"
+            placeholder="Código de acesso"
+        >
+
+        <br>
+
+        <button onclick="loginAdmin()">
+            ENTRAR
+        </button>
+
+        <button onclick="closeAdminLogin()">
+            CANCELAR
+        </button>
+
+        <p id="adminMessage"></p>
+
+    </div>
+
+
+    <!-- PAINEL ADMIN -->
+
+    <div id="adminPanel">
+
+        <h2>⚙️ PAINEL ADMIN</h2>
+
+        <div id="adminComments"></div>
+
+        <button onclick="addComment()">
+            ➕ ADICIONAR COMENTÁRIO
+        </button>
+
+        <button onclick="closeAdmin()">
+            FECHAR
+        </button>
+
+    </div>
+
+
     <script>
-        let startTime = Date.now();
-        let hasWarned = false;
 
-        // Предупреждение при попытке выйти (первые 5 секунд)
-        window.addEventListener('beforeunload', function(e) {
-            if (Date.now() - startTime < 5000 && !hasWarned) {
-                e.preventDefault();
-                e.returnValue = 'Sair terá consequências!';
-                return 'Sair terá consequências!';
+        /* =========================
+           COMENTÁRIOS
+        ========================= */
+
+        let comments = JSON.parse(
+            localStorage.getItem("comments")
+        ) || [
+            {
+                name: "Utilizador",
+                text: "Este site é muito interessante!"
+            },
+            {
+                name: "Aluno",
+                text: "Aprendi várias coisas sobre segurança na internet."
             }
-        });
+        ];
 
-        // Блокировка кнопки "Назад"
-        history.pushState(null, null, location.href);
-        window.onpopstate = function() {
-            if (Date.now() - startTime < 5000) {
-                history.go(1);
-                alert('Sair terá consequências!');
+
+        function saveComments() {
+
+            localStorage.setItem(
+                "comments",
+                JSON.stringify(comments)
+            );
+
+        }
+
+
+        function showComments() {
+
+            const list = document.getElementById("commentList");
+
+            list.innerHTML = "";
+
+            comments.forEach(function(comment) {
+
+                const div = document.createElement("div");
+
+                div.className = "comment";
+
+                div.innerHTML =
+                    '<div class="comment-name">' +
+                    comment.name +
+                    '</div>' +
+
+                    '<div class="comment-text">' +
+                    comment.text +
+                    '</div>';
+
+                list.appendChild(div);
+
+            });
+
+        }
+
+
+        /* =========================
+           ADMIN LOGIN
+        ========================= */
+
+        function openAdminLogin() {
+
+            document.getElementById("adminLogin").style.display = "block";
+
+            document.getElementById("adminPassword").value = "";
+
+            document.getElementById("adminMessage").textContent = "";
+
+        }
+
+
+        function closeAdminLogin() {
+
+            document.getElementById("adminLogin").style.display = "none";
+
+        }
+
+
+        function loginAdmin() {
+
+            const password =
+                document.getElementById("adminPassword").value;
+
+            if (password === "1M178_Jdh") {
+
+                closeAdminLogin();
+
+                openAdmin();
+
+            } else {
+
+                document.getElementById("adminMessage").textContent =
+                    "Código incorreto!";
+
             }
-        };
 
-        // Переход на вторую фазу через 5 секунд
+        }
+
+
+        /* =========================
+           PAINEL ADMIN
+        ========================= */
+
+        function openAdmin() {
+
+            document.getElementById("adminPanel").style.display = "block";
+
+            showAdminComments();
+
+        }
+
+
+        function closeAdmin() {
+
+            document.getElementById("adminPanel").style.display = "none";
+
+        }
+
+
+        function showAdminComments() {
+
+            const panel =
+                document.getElementById("adminComments");
+
+            panel.innerHTML = "";
+
+
+            comments.forEach(function(comment, index) {
+
+                const div = document.createElement("div");
+
+                div.className = "admin-comment";
+
+
+                div.innerHTML = `
+
+                    <input
+                        type="text"
+                        id="name-${index}"
+                        value="${comment.name}"
+                        placeholder="Nome"
+                    >
+
+                    <textarea
+                        id="text-${index}"
+                        placeholder="Comentário"
+                    >${comment.text}</textarea>
+
+                    <button
+                        class="save-button"
+                        onclick="editComment(${index})"
+                    >
+                        💾 GUARDAR
+                    </button>
+
+                    <button
+                        class="delete-button"
+                        onclick="deleteComment(${index})"
+                    >
+                        🗑️ APAGAR
+                    </button>
+
+                `;
+
+                panel.appendChild(div);
+
+            });
+
+        }
+
+
+        /* =========================
+           EDITAR COMENTÁRIO
+        ========================= */
+
+        function editComment(index) {
+
+            const name =
+                document.getElementById("name-" + index).value;
+
+            const text =
+                document.getElementById("text-" + index).value;
+
+
+            comments[index].name = name;
+
+            comments[index].text = text;
+
+
+            saveComments();
+
+            showComments();
+
+            alert("Comentário editado!");
+
+        }
+
+
+        /* =========================
+           APAGAR COMENTÁRIO
+        ========================= */
+
+        function deleteComment(index) {
+
+            if (confirm("Apagar este comentário?")) {
+
+                comments.splice(index, 1);
+
+                saveComments();
+
+                showComments();
+
+                showAdminComments();
+
+            }
+
+        }
+
+
+        /* =========================
+           ADICIONAR COMENTÁRIO
+        ========================= */
+
+        function addComment() {
+
+            comments.push({
+
+                name: "Novo utilizador",
+
+                text: "Novo comentário"
+
+            });
+
+
+            saveComments();
+
+            showComments();
+
+            showAdminComments();
+
+        }
+
+
+        /* =========================
+           INICIALIZAÇÃO
+        ========================= */
+
+        showComments();
+
+
+        /* =========================
+           ECRÃ DE ALERTA
+        ========================= */
+
         setTimeout(function() {
-            document.getElementById('phase1').classList.add('reveal');
-            document.getElementById('phase1').style.display = 'none';
-            document.getElementById('phase2').classList.add('active');
-            
-            // Прокручиваем наверх когда появляется второй экран
+
+            document.getElementById("phase1").style.display = "none";
+
+            document.getElementById("phase2").classList.add("active");
+
             window.scrollTo(0, 0);
+
         }, 5000);
+
     </script>
+
 </body>
 </html>
